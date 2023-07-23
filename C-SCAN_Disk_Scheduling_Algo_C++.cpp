@@ -36,23 +36,21 @@ int moveLeft(vector<int> left,vector<int> right, int total_Tracks,vector<int> re
    int total_head_movement=0; 
    for (int i = left.size() - 1; i >=0; i--) 
    {
-        // calculate absolute distance
+        
         total_head_movement += abs(initial_pos - left[i]);	
         initial_pos = left[i];
-        // appending current track to seek sequence
+    
         seek_sequence.push_back(left[i]); 
    }
    
    right.size() ?  total_head_movement += (total_Tracks - 1): 0 ;
    initial_pos = total_Tracks - 1;
    
-   //move right
    for (int i = right.size() -1; i >=0; i--)
    {
-        // calculate absolute distance
         total_head_movement += abs(initial_pos - right[i]);	
         initial_pos = right[i];
-        // appending current track to seek sequence
+    
         seek_sequence.push_back(right[i]); 
    }
   
@@ -63,17 +61,11 @@ int applyCSCANAlgo(int total_Tracks, vector<int> request_queue, int initial_pos,
 {
 	int total_head_movement=0;
 	vector<int> left, right;
-
-    // appending end values which has to be visited during reversing the direction
     if( ( initial_pos > *min_element(request_queue.begin(), request_queue.end())) && (initial_pos < *max_element(request_queue.begin(), request_queue.end())) )
     {
           right.push_back(total_Tracks - 1);
           left.push_back(0);  //here  0 is initial Track of HDD
     }
-    
-
-    //Decide on basis of direction where to put initial position (this is only needed if we want to print this initia_pos also
-    // in seek_sequence otherwise remove thsi if-else
 	if(direction == 0)
         right.push_back(initial_pos);
     else if(direction == 1)
