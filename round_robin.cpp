@@ -40,16 +40,16 @@ int main()
  cout << fixed << setprecision(2);
  for(int i=0;i<n;i++)
  {
- cout<<"\nEnter Process " <<i<< " Arrival Time: ";
- cin >> ps[i].at;
- ps[i].pid=i;
+    cout<<"\nEnter Process " <<i<< " Arrival Time: ";
+    cin >> ps[i].at;
+    ps[i].pid=i;
  }
  
  for(int i=0;i<n;i++)
  {
- cout<<"\nEnter Process " <<i<< " Burst Time: ";
- cin >> ps[i].bt;
- ps[i].bt_remaining= ps[i].bt;
+    cout<<"\nEnter Process " <<i<< " Burst Time: ";
+    cin >> ps[i].bt;
+    ps[i].bt_remaining= ps[i].bt;
  }
  
  cout<<"\nEnter time quanta: ";
@@ -63,60 +63,60 @@ int main()
  
  while(completed != n) 
  {
- index = q.front(); 
- q.pop();
+    index = q.front(); 
+    q.pop();
  
- if(ps[index].bt_remaining == ps[index].bt)
- {
- ps[index].start_time = max(current_time,ps[index].at);
- total_idle_time += (is_first_process == true) ? 0 : ps[index].start_time - current_time;
- current_time = ps[index].start_time;
- is_first_process = false;
- 
- }
- if(ps[index].bt_remaining-tq > 0)
- { 
- ps[index].bt_remaining -= tq;
- current_time += tq;
- }
- else 
- {
- current_time += ps[index].bt_remaining;
- ps[index].bt_remaining = 0;
- completed++;
- ps[index].ct = current_time;
- ps[index].tat = ps[index].ct - ps[index].at;
- ps[index].wt = ps[index].tat - ps[index].bt;
- ps[index].rt = ps[index].start_time - ps[index].at;
- sum_tat += ps[index].tat;
- sum_wt += ps[index].wt;
- sum_rt += ps[index].rt;
- }
- for(int i = 1; i < n; i++) 
- {
- if(ps[i].bt_remaining > 0 && ps[i].at <= current_time && visited[i] == false) 
- {
- q.push(i);
- visited[i] = true;
- }
- }
+    if(ps[index].bt_remaining == ps[index].bt)
+    {
+        ps[index].start_time = max(current_time,ps[index].at);
+        total_idle_time += (is_first_process == true) ? 0 : ps[index].start_time - current_time;
+        current_time = ps[index].start_time;
+        is_first_process = false;
+    
+    }
+    if(ps[index].bt_remaining-tq > 0)
+    { 
+        ps[index].bt_remaining -= tq;
+        current_time += tq;
+    }
+    else 
+    {
+        current_time += ps[index].bt_remaining;
+        ps[index].bt_remaining = 0;
+        completed++;
+        ps[index].ct = current_time;
+        ps[index].tat = ps[index].ct - ps[index].at;
+        ps[index].wt = ps[index].tat - ps[index].bt;
+        ps[index].rt = ps[index].start_time - ps[index].at;
+        sum_tat += ps[index].tat;
+        sum_wt += ps[index].wt;
+        sum_rt += ps[index].rt;
+    }
+    for(int i = 1; i < n; i++) 
+    {
+        if(ps[i].bt_remaining > 0 && ps[i].at <= current_time && visited[i] == false) 
+        {
+            q.push(i);
+            visited[i] = true;
+        }
+    }
 
- if( ps[index].bt_remaining> 0) 
- q.push(index);
+    if( ps[index].bt_remaining> 0) 
+      q.push(index);
  
  //if queue is empty, just add one process from list, whose remaining burst time > 0
- if(q.empty())
- {
- for(int i = 1; i < n; i++)
- {
- if(ps[i].bt_remaining > 0)
- {
- q.push(i);
- visited[i] = true;
- break;
- }
- }
- }
+    if(q.empty())
+    {
+        for(int i = 1; i < n; i++)
+        {
+            if(ps[i].bt_remaining > 0)
+            {
+                q.push(i);
+                visited[i] = true;
+                break;
+            }
+        }
+    }
  } 
  
  max_completion_time = INT_MIN;
